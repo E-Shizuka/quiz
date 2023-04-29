@@ -1,0 +1,82 @@
+/*全体共通
+最初から設定してあるので特に変更
+しなくても大丈夫です♪
+-----------------*/
+
+@font-face {
+  font-family: "MyKokoro";
+  src: url("./../font/Kokoro.eot");
+  /* IE9 Compat Modes */
+  src: url("./../font/Kokoro.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */ url("./../font/Kokoro.otf") format("opentype");
+  /* Safari, Android, iOS */
+}
+
+body {
+  font-family: Garamond, "MyKokoro", serif;
+  src: url("https://cdn.leafscape.be/kokoro/Kokoro_web.woff2") format("woff2");
+  line-height: 1.75;
+  font-size: 16px;
+  user-select: none;
+}
+
+button,
+select,
+textarea {
+  font-family: Garamond, "Kokoro", "こころ明朝体", serif;
+  src: url("https://cdn.leafscape.be/kokoro/Kokoro_web.woff2") format("woff2");
+}
+
+/*パディングをサイズ内側にする処理*/
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/*ーーーーーーーーーーー*/
+/*この下から記述*/
+/*ーーーーーーーーーーー*/
+
+.title {
+  text-align: center;
+}
+
+.question-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: auto;
+  padding: 56px;
+}
+
+.question-area p,
+.question-area img {
+  width: 50%;
+  height: auto;
+}
+
+.main-area {
+  text-align: center;
+}
+/*どの部分のcssに対して
+命令をしているのかコメントを
+記載しよう！
+---------------------*/
+
+/*
+---------------------*/
+
+/*
+---------------------*/
+
+/*
+---------------------*/
+
+/*
+---------------------*/

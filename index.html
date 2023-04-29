@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>診断アプリ</title>
+    <meta name="description" content="診断" />
+    <meta property="og:title" content="診断" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="#" />
+    <meta property="og:site_name" content="診断" />
+    <meta property="og:description" content="診断" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="canonical" href="#" />
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="css/sanitize.css" />
+    <link
+      href="https://fonts.googleapis.com/earlyaccess/kokoro.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+
+  <body>
+    <div class="title">
+      <h1>記憶力診断</h1>
+      <p>
+        ７秒のみ文章と画像を表示します。<br />どちらも覚えてください。難しい場合は片方のみ覚えてください。
+      </p>
+    </div>
+    <div class="question-area" id="question1">
+      <p>
+        砂場と鉄棒やブランコ、滑り台といった子供に人気な遊具が揃えられている。<br />青で統一された、ピンクがアクセントになっているデザインになっており、木が7本植えられている。
+      </p>
+      <img src="img/kouen.jpg" alt="" />
+    </div>
+
+    <div class="question-area" id="question２">
+      <p>
+        全部で9頭のコーギーが集結！<br />
+        ・グレーと青の服で双子コーデしたコーギーが2頭。<br />
+        ・左から3番目の子がおやつをゲット。<br />
+        ・おすわりして順番待ちしている子が７頭。<br />
+        ・一番右に我慢できずにおすわりできない子が…。
+      </p>
+      <img src="img/corgi.jpg" alt="" />
+    </div>
+    <div class="question-area" id="question３">
+      <p>
+        坂守神社二十八代目の姫巫女。銀朱。<br />
+        穏やかで心優しくおっとりとした性格で、お菓子作りが得意。
+      </p>
+      <img src="img/ginshu.jpg" alt="" />
+    </div>
+    <div class="main-area">
+      <p id="questionNumber"></p>
+
+      <p id="question">0</p>
+
+      <ul>
+        <li><button id="answer00">0</button></li>
+        <li><button id="answer01">1</button></li>
+        <li><button id="answer02">2</button></li>
+      </ul>
+
+      <p>結果</p>
+      <p id="result"></p>
+
+      <div>
+        <p id="next">次へ</p>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+      const quiz = [
+        {
+          question:
+            "Q1.木は何本植えられていましたか？正しいと思うものを選択してください",
+          answers: ["5本", "6本", "7本"],
+          correct: [2, 3],
+        },
+        {
+          question: "Q2.双子コーデをしていたコーギーの服の色は？",
+          answers: ["緑", "グレーと青", "赤"],
+          correct: [1, 2],
+        },
+        {
+          question: "Q3.どんな人？",
+          answers: ["社交的な人", "赤い人", "銀朱さん"],
+          correct: [2, 3],
+        },
+      ];
+
+      const result = [];
+
+      const answerdeta = [];
+
+      //定義
+      $("#questionNumber").text(quiz[0].questionNumber);
+      $("#question").text(quiz[0].question);
+      $("#answer00").text(quiz[0].answers[0]);
+      $("#answer01").text(quiz[0].answers[1]);
+      $("#answer02").text(quiz[0].answers[2]);
+
+      $("#answer00").val(0);
+      $("#answer01").val(1);
+      $("#answer02").val(2);
+
+      //アクション
+      $("button").on("click", function (e) {
+        console.log(e);
+        const answer = Number(e.target.value); //valueやinputで取得すると文字列になるので、数字に変換。
+        console.log(answer);
+
+        if (answer === quiz[result.length].correct) {
+          // 正解の表示
+          $("#result").text("正解");
+          // 結果を配列に追加
+          result.push("ok");
+        } else {
+          answerdeta.push(1);
+          // 不正解の表示
+          $("#result").text("不正解");
+          // 結果を配列に追加
+          result.push("ng");
+          answerdeta.push(0);
+        }
+      });
+      $("#next").on("click", function (e) {
+        // resultのlengthが１になる（lengthをカウントする）
+        $("#questionNumber").text(quiz[result.length].questionNumber);
+        $("#question").text(quiz[result.length].question);
+        $("#answer00").text(quiz[result.length].answers[0]);
+        $("#answer01").text(quiz[result.length].answers[1]);
+        $("#answer02").text(quiz[result.length].answers[2]);
+      });
+    </script>
+  </body>
+</html>
