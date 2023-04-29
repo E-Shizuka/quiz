@@ -34,29 +34,10 @@
     </div>
 
     <div class="question-area" id="question1">
-      <p>
-        砂場と鉄棒やブランコ、滑り台といった子供に人気な遊具が揃えられている。<br />青で統一された、ピンクがアクセントになっているデザインになっており、木が7本植えられている。
-      </p>
-      <img src="img/kouen.jpg" alt="" />
+      <div id="q-t"></div>
+      <div id="q-p"></div>
     </div>
 
-    <div class="question-area" id="question2">
-      <p>
-        全部で9頭のコーギーが集結！<br />
-        ・グレーと青の服で双子コーデしたコーギーが2頭。<br />
-        ・左から3番目の子がおやつをゲット。<br />
-        ・おすわりして順番待ちしている子が７頭。<br />
-        ・一番右に我慢できずにおすわりできない子が…。
-      </p>
-      <img src="img/corgi.jpg" alt="" />
-    </div>
-    <div class="question-area" id="question3">
-      <p>
-        坂守神社二十八代目の姫巫女。銀朱。<br />
-        穏やかで心優しくおっとりとした性格で、お菓子作りが得意。
-      </p>
-      <img src="img/ginshu.jpg" alt="" />
-    </div>
     <div class="main-area">
       <p id="questionNumber"></p>
 
@@ -79,6 +60,32 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script>
+      const questionClasses = [
+        {
+          text: `<p>
+        砂場と鉄棒やブランコ、滑り台といった子供に人気な遊具が揃えられている。<br />青で統一された、ピンクがアクセントになっているデザインになっており、木が7本植えられている。
+      </p>`,
+          Image: `<img src="img/kouen.jpg" alt="" />`,
+        },
+        {
+          text: ` <p>
+        全部で9頭のコーギーが集結！<br />
+        ・グレーと青の服で双子コーデしたコーギーが2頭。<br />
+        ・左から3番目の子がおやつをゲット。<br />
+        ・おすわりして順番待ちしている子が７頭。<br />
+        ・一番右に我慢できずにおすわりできない子が…。
+      </p>`,
+          Image: `<img src="img/corgi.jpg" alt="" />`,
+        },
+        {
+          text: `<p>
+        坂守神社二十八代目の姫巫女。銀朱。<br />
+        穏やかで心優しくおっとりとした性格で、お菓子作りが得意。
+      </p>`,
+          Image: `<img src="img/ginshu.jpg" alt="" />`,
+        },
+      ];
+
       const quiz = [
         {
           question:
@@ -102,16 +109,12 @@
 
       const answerdeta = [];
 
-      //定義
-      $("#questionNumber").text(quiz[0].questionNumber);
-      $("#question").text(quiz[0].question);
-      $("#answer00").text(quiz[0].answers[0]);
-      $("#answer01").text(quiz[0].answers[1]);
-      $("#answer02").text(quiz[0].answers[2]);
+      // <div id="q-t"></div>
+      //<div id="q-p"></div>
 
-      $("#answer00").val(0);
-      $("#answer01").val(1);
-      $("#answer02").val(2);
+      //定義
+      $("#q-t").html(questionClasse[0].text);
+      $("#q-p").text(questionClasse[0].Image);
 
       //アクション
       $("#start").on("click", function () {
