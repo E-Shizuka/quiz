@@ -24,86 +24,83 @@
 
   <body>
     <div class="title">
-      <h1>記憶力診断</h1>
+      <h1 class="title-t">記憶力診断</h1>
       <p>
-        文章と画像を5秒間のみ表示します。<br />その後出題される問題を説いてください。
+        あなたの記憶力、記憶タイプを3問答えるだけで簡易的に診断します！<br /><br />文章と画像を5秒間のみ表示します。<br />その後出題される問題を解いてください。
       </p>
-      <div>
-        <p id="start">start</p>
-      </div>
+      <ul class="btn1">
+        <li><button id="start">start</button></li>
+      </ul>
     </div>
 
     <div class="question-area" id="question1">
-      <p>
-        砂場と鉄棒やブランコ、滑り台といった子供に人気な遊具が揃えられている。<br />青で統一された、ピンクがアクセントになっているデザインになっており、木が7本植えられている。
-      </p>
-      <img src="img/kouen.jpg" alt="" />
+      <p id="kText"></p>
+      <img id="kImg" />
     </div>
 
-    <div class="question-area" id="question2">
-      <p>
-        全部で9頭のコーギーが集結！<br />
-        ・グレーと青の服で双子コーデしたコーギーが2頭。<br />
-        ・左から3番目の子がおやつをゲット。<br />
-        ・おすわりして順番待ちしている子が７頭。<br />
-        ・一番右に我慢できずにおすわりできない子が…。
-      </p>
-      <img src="img/corgi.jpg" alt="" />
-    </div>
-    <div class="question-area" id="question3">
-      <p>
-        坂守神社二十八代目の姫巫女。銀朱。<br />
-        穏やかで心優しくおっとりとした性格で、お菓子作りが得意。
-      </p>
-      <img src="img/ginshu.jpg" alt="" />
-    </div>
     <div class="main-area">
       <p id="questionNumber"></p>
 
-      <p id="question">0</p>
+      <p id="question"></p>
 
-      <ul>
-        <li><button id="answer00">0</button></li>
-        <li><button id="answer01">1</button></li>
-        <li><button id="answer02">2</button></li>
+      <ul class="btn2">
+        <li><button class="answerbtn" id="answer00">0</button></li>
+        <li><button class="answerbtn" id="answer01">1</button></li>
+        <li><button class="answerbtn" id="answer02">2</button></li>
       </ul>
-
+    </div>
+    <div class="next-area">
       <p>結果</p>
       <p id="result"></p>
-
-      <div>
-        <p id="next">次へ</p>
-      </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script>
+      const questionClasses = [
+        {
+          text: `砂場と鉄棒やブランコ、滑り台といった子供に人気な遊具が揃えられている。<br />青で統一された、ピンクがアクセントになっているデザインになっており、木が7本植えられている。`,
+          Image: "img/kouen.jpg",
+        },
+        {
+          text: `全部で9頭のコーギーが集結！<br />
+              ・グレーと青の服で双子コーデしたコーギーが2頭。<br />
+              ・左から3番目の子がおやつをゲット。<br />
+              ・おすわりして順番待ちしている子が７頭。<br />
+               ・一番右に我慢できずにおすわりできない子が…。`,
+          Image: "img/corgi.jpg",
+        },
+        {
+          text: `坂守神社二十八代目の姫巫女。銀朱。<br />
+              穏やかで心優しくおっとりとした性格で、お菓子作りが得意。`,
+          Image: "img/ginshu.jpg",
+        },
+      ];
+
       const quiz = [
         {
           question:
             "Q1.木は何本植えられていましたか？正しいと思うものを選択してください",
-          answers: ["5本", "6本", "7本"],
-          correct: [2, 3],
+          answers: ["6本", "5本", "7本"],
+          correct: [0, 2],
         },
         {
           question: "Q2.双子コーデをしていたコーギーの服の色は？",
-          answers: ["緑", "グレーと青", "赤"],
-          correct: [1, 2],
+          answers: ["緑", "赤", "グレーと青"],
+          correct: [0, 2],
         },
         {
           question: "Q3.どんな人？",
-          answers: ["社交的な人", "赤い人", "銀朱さん"],
-          correct: [2, 3],
+          answers: ["赤い人", "社交的な人", "銀朱さん"],
+          correct: [0, 2],
         },
       ];
 
       const result = [];
 
-      const answerdeta = [];
-
       //定義
-      $("#questionNumber").text(quiz[0].questionNumber);
+      $("#kText").html(questionClasses[0].text);
+      $("#kImg").attr("src", questionClasses[0].Image);
       $("#question").text(quiz[0].question);
       $("#answer00").text(quiz[0].answers[0]);
       $("#answer01").text(quiz[0].answers[1]);
@@ -114,35 +111,87 @@
       $("#answer02").val(2);
 
       //アクション
+
+      let aAnswer = 0;
+      let bAnswer = 0;
       $("#start").on("click", function () {
         $("#question1").css("display", "flex");
+        $(".btn1").css("display", "none");
         setTimeout(function () {
           $("#question1").css("display", "none");
+          $(".main-area").css("display", "block");
         }, 5000); // 5秒後に実行
       });
 
-      $("button").on("click", function (e) {
+      $(".answerbtn").on("click", function (e) {
         console.log(e);
-        const answer = Number(e.target.value); //valueやinputで取得すると文字列になるので、数字に変換。
-        console.log(answer);
+        const answer = Number(e.target.value);
 
-        if (answer === quiz[result.length].correct) {
+        if (quiz[result.length].correct.includes(answer)) {
           // 正解の表示
           $("#result").text("正解");
           // 結果を配列に追加
           result.push("ok");
+
+          // id="answer00"をクリックした場合、aAnswerに1追加
+          if (e.target.value === "0") {
+            aAnswer += 1;
+          }
+
+          // id="answer02"をクリックした場合、bAnswerに1追加
+          if (e.target.value === "2") {
+            bAnswer += 1;
+          }
+
+          console.log("Aタイプ" + aAnswer);
+          console.log("Bタイプ" + bAnswer);
         } else {
-          answerdeta.push(1);
           // 不正解の表示
           $("#result").text("不正解");
           // 結果を配列に追加
           result.push("ng");
-          answerdeta.push(0);
+          console.log("Aタイプ" + aAnswer);
+          console.log("Bタイプ" + bAnswer);
         }
-      });
-      $("#next").on("click", function (e) {
+
+        $(".next-area").css("display", "block");
+        $(".main-area").css("display", "none");
+        console.log("result" + result.length);
+        console.log("quiz" + quiz.length);
+        if (result.length !== quiz.length) {
+          $(".main-area").css("display", "none");
+          setTimeout(function () {
+            $(".next-area").css("display", "none");
+            $("#question1").css("display", "flex");
+          }, 3000); // 3秒後に実行
+          setTimeout(function () {
+            $("#question1").css("display", "none");
+            $(".main-area").css("display", "block");
+          }, 8000); // 5秒後に実行（3秒後に5秒）
+        }
+
+        if (result.length === quiz.length) {
+          // クイズの全問題に回答した場合、結果を表示する
+          const score = result.filter((r) => r === "ok").length; // 正解の数を数える
+          if (aAnswer === 3) {
+            $("#result").text("完全なる視覚優位タイプ");
+          } else if (bAnswer === 3) {
+            $("#result").text("完全なる言語優位タイプ");
+          } else if (aAnswer === 2) {
+            $("#result").text("どちらかというと視覚優位タイプ");
+          } else if (bAnswer === 2) {
+            $("#result").text("どちらかというと言語優位タイプ");
+          } else if (aAnswer === 1 && bAnswer === 1) {
+            $("#result").text("視覚と言語の臨機応変タイプ");
+          } else {
+            $("#result").text("苦手な記憶方法に挑んでいるかも…？");
+          }
+          return; // イベント処理を中断する
+        }
+
         // resultのlengthが１になる（lengthをカウントする）
-        $("#questionNumber").text(quiz[result.length].questionNumber);
+        $("#kText").html(questionClasses[result.length].text);
+        $("#kImg").attr("src", questionClasses[result.length].Image);
         $("#question").text(quiz[result.length].question);
         $("#answer00").text(quiz[result.length].answers[0]);
         $("#answer01").text(quiz[result.length].answers[1]);
